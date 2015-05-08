@@ -22,7 +22,6 @@ class RegisterHandler(BaseHandler):
             client.save_doc(data)
             client = AsyncCouch('logged_in_users', BaseHandler.db_url)
             new_doc = dict()
-            print(data)
             new_doc['token'], new_doc['expiry'] = BaseHandler.get_token(data)
             new_doc['username'] = data['username']
             client.save_doc(new_doc)
