@@ -12,7 +12,7 @@ from src.validatehandler import ValidateHandler
 from src.userhandler import UserHandler
 
 
-define('ip', default='192.168.1.3', type=str, help='Give the ip on which the server will bind')
+define('ip', default='0.0.0.0', type=str, help='Give the ip on which the server will bind')
 
 app = Application([
     (r'/api/register', RegisterHandler),
