@@ -13,11 +13,11 @@ class UploadHandler(BaseHandler):
     @coroutine
     def post(self, *args, **kwargs):
 
+        for file in self.request.files:
+            print(file)
         print(self.request)
-        token = self.get_argument('token')
-        module = self.get_argument('moduleName')
-        # token = "288412e0d8bbbe7a471116370590c520"
-        # module = "template"
+        token = "288412e0d8bbbe7a471116370590c520"
+        module = "template"
         client = AsyncCouch('logged_in_users', BaseHandler.db_url)
         query = "function(doc){if(doc.token == '" + token + "'){emit(doc, null)}}"
         view_doc = dict()
