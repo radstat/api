@@ -13,6 +13,7 @@ class UploadHandler(BaseHandler):
     @coroutine
     def post(self, *args, **kwargs):
 
+        print(self.request.body)
         data = json.loads(self.request.body.decode('utf-8'))
         token = data['token']
         module = data['moduleName']
