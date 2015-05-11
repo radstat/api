@@ -17,8 +17,8 @@ class UploadHandler(BaseHandler):
         data = json.loads(self.request.body.decode('utf-8'))
         token = data['token']
         module = data['moduleName']
-        token = "288412e0d8bbbe7a471116370590c520"
-        module = "template"
+        # token = "288412e0d8bbbe7a471116370590c520"
+        # module = "template"
         client = AsyncCouch('logged_in_users', BaseHandler.db_url)
         query = "function(doc){if(doc.token == '" + token + "'){emit(doc, null)}}"
         view_doc = dict()
