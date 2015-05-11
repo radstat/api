@@ -14,9 +14,8 @@ class UploadHandler(BaseHandler):
     def post(self, *args, **kwargs):
 
         print(self.request)
-        data = json.loads(self.request.body.decode('utf-8'))
-        token = data['token']
-        module = data['moduleName']
+        token = self.get_argument('token')
+        module = self.get_argument('moduleName')
         # token = "288412e0d8bbbe7a471116370590c520"
         # module = "template"
         client = AsyncCouch('logged_in_users', BaseHandler.db_url)
