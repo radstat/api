@@ -5,7 +5,7 @@ from tornado.httpserver import HTTPServer
 from tornado.web import Application
 from tornado.ioloop import IOLoop
 from tornado.options import define, options
-from src.deploymenthandler import DeploymentHandler
+from src.uploadhandler import UploadHandler
 from src.registerhandler import RegisterHandler
 from src.loginhandler import LoginHandler
 from src.validatehandler import ValidateHandler
@@ -19,7 +19,7 @@ app = Application([
     (r'/api/login', LoginHandler),
     (r'/api/validate', ValidateHandler),
     (r'/api/user', UserHandler),
-    (r'/api/deployment', DeploymentHandler)
+    (r'/api/upload', UploadHandler)
 ])
 
 server = HTTPServer(app)
