@@ -15,6 +15,7 @@ class UploadHandler(BaseHandler):
 
         token = self.get_argument('token')
         module = self.get_argument('moduleName')
+        print(module)
         client = AsyncCouch('logged_in_users', BaseHandler.db_url)
         query = "function(doc){if(doc.token == '" + token + "'){emit(doc, null)}}"
         view_doc = dict()
@@ -39,6 +40,7 @@ class UploadHandler(BaseHandler):
             user_path = BaseHandler.root.rstrip('/api') + '/static-server/static/' + username
             file_path = user_path + '/' + module
             zip_file_path = file_path + '.zip'
+
             if not os.path.isdir(user_path):
                 os.mkdir(user_path)
 
