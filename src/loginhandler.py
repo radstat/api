@@ -25,17 +25,22 @@ class LoginHandler(BaseHandler):
             except Exception:
                 self.send_error(400)
         if method == 'username':
-            query_input = {'username': username, 'password': password}
-            if (yield self.exists('radstat_users', query_input)) is True:
-                self.set_db_client('logged_in_users')
-                new_doc = dict()
-                new_doc['token'], new_doc['expiry'] = BaseHandler.get_token(data)
-                new_doc['username'] = username
-                yield self.db_client.save_doc(new_doc)
-                self.response = new_doc
-                self.send_error(200)
+            query_input = {'username': username}
+            flag = yield self.exists('radstat_users', query_input)
+            if flag is True:
+                if password == self.doc['password']:
+                    self.set_db_client('logged_in_users')
+                    new_doc = dict()
+                    new_doc['token'], new_doc['expiry'] = BaseHandler.get_token(data)
+                    new_doc['username'] = username
+                    yield self.db_client.save_doc(new_doc)
+                    self.response = new_doc
+                    self.send_error(200)
+                else:
+                    self.response['error'] = "password"
+                    self.send_error(403)
             else:
-                self.response['error'] = "Wrong Username/Password Combination"
+                self.response['error'] = 'username'
                 self.send_error(403)
         elif method == 'token':
             flag, doc = yield self.validate(token)
@@ -43,5 +48,5 @@ class LoginHandler(BaseHandler):
                 self.response = doc
                 self.send_error(200)
             else:
-                self.response['erroor'] = 'Token Expired'
+                self.response['error'] = 'token'
                 self.send_error(403)

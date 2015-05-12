@@ -23,5 +23,5 @@ class ValidateHandler(BaseHandler):
         if flag is True:
             self.send_error(200)
         else:
-            self.response['error'] = "Token Doesnt Exist"
+            self.response['error'] = "token"
             self.send_error(403)

@@ -41,5 +41,5 @@ class UploadHandler(BaseHandler):
             os.unlink(zip_file_path)
             self.send_error(200)
         else:
-            self.response['error'] = "Token Doesnt Exist"
+            self.response['error'] = "token"
             self.send_error(403)

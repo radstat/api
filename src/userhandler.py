@@ -31,4 +31,5 @@ class UserHandler(BaseHandler):
             else:
                 self.send_error(400)
         else:
+            self.response['error'] = 'token'
             self.send_error(400)

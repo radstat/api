@@ -21,7 +21,7 @@ class RegisterHandler(BaseHandler):
         input_query = {'username': username}
         flag = yield self.exists('radstat_users', input_query)
         if flag is True:
-            self.response['error'] = 'Username Taken'
+            self.response['error'] = 'username'
             self.send_error(400)
         else:
             self.set_db_client('radstat_users')
