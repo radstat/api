@@ -50,6 +50,8 @@ class BaseHandler(RequestHandler):
 
         self.db_doc = None
 
+        self.doc = None
+
     def set_db_client(self, db_name):
         self.db_client = AsyncCouch(db_name, self.db_url)
 
@@ -64,6 +66,7 @@ class BaseHandler(RequestHandler):
         self.db_client.close()
         if self.db_doc is not None:
             if self.db_doc['total_rows'] == 1:
+                self.doc = self.db_doc['rows'][0]['key']
                 return True
             else:
                 return False

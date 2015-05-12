@@ -38,7 +38,7 @@ class LoginHandler(BaseHandler):
                 self.response['error'] = "Wrong Username/Password Combination"
                 self.send_error(403)
         elif method == 'token':
-            flag, doc= yield self.validate(token)
+            flag, doc = yield self.validate(token)
             if flag is True:
                 self.response = doc
                 self.send_error(200)

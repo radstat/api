@@ -11,15 +11,17 @@ class ValidateHandler(BaseHandler):
 
     @coroutine
     def post(self, *args, **kwargs):
-        data = json.loads(self.request.body.decode('utf-8'))
-        client = AsyncCouch('logged_in_users', BaseHandler.db_url)
-        query = "function(doc){if(doc.token == '" + data['token'] + "'){emit(doc, null)}}"
-        view_doc = dict()
-        view_doc['map'] = query
-        view_doc['reduce'] = None
-        doc = yield client.temp_view(view_doc)
-        if doc['total_rows'] == 0:
+
+        try:
+            token = self.get_argument('token')
+            module = self.get_argument('moduleName')
+        except Exception:
+            self.send_error(400)
+
+        flag, doc = yield self.validate(token)
+
+        if flag is True:
+            self.send_error(200)
+        else:
             self.response['error'] = "Token Doesnt Exist"
             self.send_error(403)
-        else:
-            self.send_error(200)
